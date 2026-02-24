@@ -79,12 +79,34 @@ for q in Question.objects.all():
 Do you like me? 3"""
 ```
 
+### 6. Trier les choix des questions par vote :
+```python
+for i, q in enumerate(Question.objects.all()):
+    print(q.question_text)
+    for choice in Choice.objects.filter(question=q).order_by("votes"):
+        print(choice.choice_text, "votes:", choice.votes)
+"""What's up?
+My disappointment is immeasurable, and my day is ruined. votes: 0
+I'm doing fine. votes: 0
+Amazing! votes: 0
+Do you like me?
+Yes. votes: 0
+Absolutely! votes: 0
+Definitely! votes: 0"""
+```
+
 ### 7. Trier les questions par order antéchronologique :
 ```python
 for q in Question.objects.all().order_by("-published_date"):
     print(q.question_text);
 """Do you like me?
 What's up?"""
+```
+
+### 8. Trouver les questions à partir d'un mot :
+```python
+Question.objects.filter(question_text__contains="What")
+"<QuerySet [<Question: What's up?>]>"
 ```
 
 ### 9. Créer une question à partir du Shell :
@@ -100,8 +122,15 @@ q.choice_set.create(choice_text="Better than you.", votes=0)
 q.choice_set.create(choice_text=":c", votes=0)
 ```
 
-### 11. Listez les questions publiées récemment :
+### 11. Lister les questions publiées récemment :
 ```python
 Question.objects.filter(published_date__gte=timezone.now() - datetime.timedelta(days=1))
 "<QuerySet [<Question: What's up?>, <Question: Do you like me?>]"
+```
+
+### 12. Lister tous les utilisateurs enregistrés :
+```python
+from django.contrib.auth.models import User
+User.objects.all()
+"<QuerySet [<User: admin>, <User: guest>]>"
 ```
