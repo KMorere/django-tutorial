@@ -32,8 +32,7 @@ class Question(models.Model):
         Get the choices related to the question.
         :return: All the choices related.
         """
-        resultat = self.choice_set.aggregate(total=models.Sum('votes'))
-        total = resultat['total']
+        total = self.get_total()
         if total == 0:
             return 0
         return [(c.choice_text, c.votes, c.votes * 100 / total)
@@ -45,6 +44,12 @@ class Question(models.Model):
         :return: The highest number of votes.
         """
         return Choice.objects.filter(question=self).aggregate(models.Max("votes"))
+
+    def get_total(self):
+        return self.choice_set.aggregate(total=models.Sum('votes'))["total"]
+
+    def get_highest_question(self):
+        return self.objects.aggregate(models.Max(""))
 
 
 class Choice(models.Model):

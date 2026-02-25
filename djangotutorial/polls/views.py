@@ -1,4 +1,4 @@
-from django.db.models import F
+from django.db.models import F, Count, Sum, Max
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -26,6 +26,33 @@ class AllView(generic.ListView):
 class FrequencyView(generic.DetailView):
     model = Question
     template_name = "polls/frequency.html"
+
+
+class StatisticView(generic.ListView):
+    template_name = "polls/statistics.html"
+    context_object_name = "questions"
+    model = Question
+
+    def get_queryset(self):
+        return Question.objects.annotate(total_choices=Count("choice"))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["total_choices"] = self.get_queryset().aggregate(total=Count("choice"))["total"] or 0
+        context["total_votes"] = Choice.objects.aggregate(total=Sum("votes"))["total"] or 0
+
+        for question in context["questions"]:
+            total_votes = question.choice_set.aggregate(total=Sum("votes"))["total"]
+            average = total_votes / question.choice_set.all().count()
+            question.average = 0 if average == 0 else round(average, 2)
+
+        context["popular"] = max(Question.objects.all(), key=lambda q: q.get_total(), default=None)
+        context["least_popular"] = min(Question.objects.all(), key=lambda q: q.get_total(), default=None)
+
+        context["last_saved"] = Question.objects.order_by("-published_date").first()
+
+        return context
 
 
 class DetailView(generic.DetailView):

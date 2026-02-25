@@ -1,0 +1,14 @@
+<p>Amount of questions : {{ questions.count }}</p>
+<p>Total amount of choices : {{ total_choices }}</p>
+<p>Total amount of votes : {{ total_votes }}</p>
+<ul>
+    {% for question in questions %}
+        <li><p>
+            Average of votes on {{ question.question_text }} :
+            {{ question.average }}
+        </p></li>
+    {% endfor %}
+</ul>
+<p>Most popular question : {{ popular.question_text }}</p>
+<p>Least popular question : {{ least_popular.question_text }}</p>
+<p>Least saved question : {{ last_saved.question_text }} ({{ last_saved.published_date }})</p>
