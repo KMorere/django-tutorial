@@ -16,11 +16,16 @@ class IndexView(generic.ListView):
 
 
 class AllView(generic.ListView):
-    template_name = "polls/index.html"
+    template_name = "polls/all.html"
     context_object_name = "latest_questions"
 
     def get_queryset(self):
         return Question.objects.order_by("-published_date")
+
+
+class FrequencyView(generic.DetailView):
+    model = Question
+    template_name = "polls/frequency.html"
 
 
 class DetailView(generic.DetailView):

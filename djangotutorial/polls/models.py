@@ -32,7 +32,10 @@ class Question(models.Model):
         Get the choices related to the question.
         :return: All the choices related.
         """
-        return Choice.objects.filter(question=self)
+        resultat = self.choice_set.aggregate(total=models.Sum('votes'))
+        total = resultat['total']
+        return [(c.choice_text, c.votes, c.votes / total)
+                for c in self.choice_set.all()]
 
     def get_max_choices(self):
         """
