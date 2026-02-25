@@ -50,7 +50,7 @@ class StatisticView(generic.ListView):
         context["popular"] = max(Question.objects.all(), key=lambda q: q.get_total(), default=None)
         context["least_popular"] = min(Question.objects.all(), key=lambda q: q.get_total(), default=None)
 
-        context["last_saved"] = Question.objects.order_by("-published_date").first()
+        context["last_saved"] = Question.objects.get(id=Question.objects.aggregate(total=Max("id"))["total"])
 
         return context
 
