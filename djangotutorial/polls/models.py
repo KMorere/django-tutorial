@@ -34,7 +34,7 @@ class Question(models.Model):
         """
         total = self.get_total()
         if total == 0:
-            return 0
+            total = 1
         return [(c.choice_text, c.votes, c.votes * 100 / total)
                 for c in self.choice_set.all()]
 
