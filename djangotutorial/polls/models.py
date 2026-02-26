@@ -46,7 +46,10 @@ class Question(models.Model):
         return Choice.objects.filter(question=self).aggregate(models.Max("votes"))
 
     def get_total(self):
-        return self.choice_set.aggregate(total=models.Sum('votes'))["total"]
+        if self.choice_set.all().count() > 0:
+            return self.choice_set.aggregate(total=models.Sum('votes'))["total"]
+        else:
+            return 0
 
     def get_highest_question(self):
         return self.objects.aggregate(models.Max(""))

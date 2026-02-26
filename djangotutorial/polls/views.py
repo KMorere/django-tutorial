@@ -51,9 +51,10 @@ class StatisticView(generic.ListView):
         context["total_votes"] = Choice.objects.aggregate(total=Sum("votes"))["total"] or 0
 
         for question in context["questions"]:
-            total_votes = question.choice_set.aggregate(total=Sum("votes"))["total"]
-            average = total_votes / question.choice_set.all().count()
-            question.average = 0 if average == 0 else round(average, 2)
+            if question.choice_set.all().count() > 0:
+                total_votes = question.choice_set.aggregate(total=Sum("votes"))["total"]
+                average = total_votes / question.choice_set.all().count()
+                question.average = 0 if average == 0 else round(average, 2)
 
         context["popular"] = max(Question.objects.all(), key=lambda q: q.get_total(), default=None)
         context["least_popular"] = min(Question.objects.all(), key=lambda q: q.get_total(), default=None)
