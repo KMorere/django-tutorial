@@ -11,6 +11,9 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text[:20] + f" {self.published_date}"
 
+    def __repr__(self):
+        return "<Question: {}>".format(self.question_text)
+
     def is_recent(self):
         """
         Is the question's published date less than a day old.
