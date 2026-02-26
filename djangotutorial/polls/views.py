@@ -1,4 +1,3 @@
-import django.contrib.messages
 from django.db.models import F, Count, Sum, Max
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -28,7 +27,7 @@ class CreateQuestionView(generic.CreateView):
     model = Question
     template_name = "polls/create_question.html"
     fields = ["question_text"]
-    success_url = reverse_lazy("index")
+    success_url = reverse_lazy("polls:index")
 
 
 class FrequencyView(generic.DetailView):
