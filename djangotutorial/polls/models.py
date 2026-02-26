@@ -16,7 +16,7 @@ class Question(models.Model):
         Is the question's published date less than a day old.
         :return: True if it is less than a year old.
         """
-        return self.published_date >= timezone.now() - datetime.timedelta(days=1)
+        return timezone.now() >= self.published_date >= timezone.now() - datetime.timedelta(days=1)
 
     def age(self):
         """
