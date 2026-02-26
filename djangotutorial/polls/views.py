@@ -1,7 +1,8 @@
+import django.contrib.messages
 from django.db.models import F, Count, Sum, Max
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from .models import Question, Choice
@@ -21,6 +22,13 @@ class AllView(generic.ListView):
 
     def get_queryset(self):
         return Question.objects.order_by("-published_date")
+
+
+class CreateQuestionView(generic.CreateView):
+    model = Question
+    template_name = "polls/create_question.html"
+    fields = ["question_text"]
+    success_url = reverse_lazy("index")
 
 
 class FrequencyView(generic.DetailView):
@@ -63,6 +71,7 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = "polls/results.html"
+
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
