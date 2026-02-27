@@ -1,10 +1,12 @@
 from django.db.models import F, Count, Sum, Max
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.utils import timezone
+from django.views.generic import FormView
 
+from .forms import QuestionForm
 from .models import Question, Choice
 
 
@@ -24,11 +26,23 @@ class AllView(generic.ListView):
         return Question.objects.order_by("-published_date")
 
 
-class CreateQuestionView(generic.CreateView):
-    model = Question
+class CreateQuestionView(FormView):
     template_name = "polls/create_question.html"
-    fields = ["question_text"]
     success_url = reverse_lazy("polls:index")
+    form_class = QuestionForm
+
+    def form_valid(self, form):
+        question = form.save(commit=False)
+
+        question.pub_date = timezone.now()
+        question.save()
+        choices = [form.cleaned_data.get(f'choice_{i}') for i in range(1, 6)]
+
+        for choice_text in choices:
+            if choice_text:
+                question.choice_set.create(choice_text=choice_text, votes=0)
+
+        return redirect('polls:all')
 
 
 class FrequencyView(generic.DetailView):
