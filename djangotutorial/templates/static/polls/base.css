@@ -1,3 +1,20 @@
 #sidebar {
     background-color: blue;
 }
+
+ul {
+    display: flex;
+}
+
+ul.horizontal-list {
+            list-style-type: none; /* Remove bullets */
+            margin: 0;
+            padding: 0;
+            display: flex; /* Arrange items in a row */
+            gap: 15px; /* Space between items */
+        }
+
+        /* Optional: style list items */
+        ul.horizontal-list li {
+            display: inline; /* Ensures inline layout if not using flex */
+        }

@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
 {% block title %}{{ block.super }} - Home{% endblock %}
-
+<main>
 {% block content %}
 {% if latest_questions %}
     <ul>
@@ -23,3 +23,4 @@
     <input type="submit" value="Create a question">
 </form>
 {% endblock %}
+</main>
