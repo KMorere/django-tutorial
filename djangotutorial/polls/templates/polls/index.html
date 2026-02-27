@@ -1,7 +1,11 @@
+{% extends "base.html" %}
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
+{% block title %}{{ block.super }} - Home{% endblock %}
+
+{% block content %}
 {% if latest_questions %}
     <ul>
     {% for question in latest_questions %}
@@ -18,3 +22,4 @@
 {% csrf_token %}
     <input type="submit" value="Create a question">
 </form>
+{% endblock %}
