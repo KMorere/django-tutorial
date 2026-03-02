@@ -12,6 +12,12 @@
         <ul>
             <li><a href="{% url 'polls:index' %}">Home</a></li>
             <li><a href="{% url 'polls:all' %}">All</a></li>
+
+            {% if not user.is_authenticated %}
+            <li><a href="/accounts/login">Login</a></li>
+            {% else %}
+            <li><a>Logout</a></li>
+            {% endif %}
         </ul>
         {% endblock %}
     </header>
