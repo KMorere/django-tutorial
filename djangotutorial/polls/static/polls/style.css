@@ -2,7 +2,7 @@ li a {
     color: #E8C1C1;
 }
 
-#content {
+.content {
     background: white url("images/background_2.png") no-repeat;
     height: 500px;
 }
