@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import F, Count, Sum, Max
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
@@ -26,7 +27,9 @@ class AllView(generic.ListView):
         return Question.objects.order_by("-published_date")
 
 
-class CreateQuestionView(FormView):
+class CreateQuestionView(PermissionRequiredMixin, FormView):
+    permission_required = "polls.add_choice"
+
     template_name = "polls/create_question.html"
     success_url = reverse_lazy("polls:index")
     form_class = QuestionForm
