@@ -29,6 +29,7 @@ class AllView(generic.ListView):
 
 class CreateQuestionView(PermissionRequiredMixin, FormView):
     permission_required = "polls.add_choice"
+    login_url = "/polls/"
 
     template_name = "polls/create_question.html"
     success_url = reverse_lazy("polls:index")
