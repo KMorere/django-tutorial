@@ -6,6 +6,10 @@
 {% block title %}{{ block.super }} - Home{% endblock %}
 
 {% block content %}
+{% if user.is_authenticated %}
+<h3>Welcome {{ username }}</h3>
+{% endif %}
+
 {% if latest_questions %}
     <ul>
     {% for question in latest_questions %}
