@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Statistics{% endblock %}
+
+{% block content %}
 <p>Amount of questions : {{ questions.count }}</p>
 <p>Total amount of choices : {{ total_choices }}</p>
 <p>Total amount of votes : {{ total_votes }}</p>
@@ -12,3 +17,4 @@
 <p>Most popular question : {{ popular.question_text }}</p>
 <p>Least popular question : {{ least_popular.question_text }}</p>
 <p>Last saved question : {{ last_saved.question_text }} ({{ last_saved.published_date }})</p>
+{% endblock %}

@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - All{% endblock %}
+
+{% block content %}
 {% if latest_questions %}
     <ul>
     {% for question in latest_questions %}
@@ -9,3 +14,4 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+{% endblock %}
