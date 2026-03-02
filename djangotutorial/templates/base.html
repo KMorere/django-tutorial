@@ -7,17 +7,17 @@
 </head>
 
 <body>
-    <div id="sidebar">
+    <header id="sidebar">
         {% block sidebar %}
         <ul>
             <li><a href="{% url 'polls:index' %}">Home</a></li>
             <li><a href="{% url 'polls:all' %}">All</a></li>
         </ul>
         {% endblock %}
-    </div>
+    </header>
 
-    <div id="content">
+    <main id="content">
         {% block content %}{% endblock %}
-    </div>
+    </main>
 </body>
 </html>
