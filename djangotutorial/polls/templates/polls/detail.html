@@ -16,8 +16,10 @@
 <input type="submit" value="Vote">
 </form>
 
+{% if is_valid %}
 <form action="{% url 'polls:delete' question.id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="Delete">
 </form>
+{% endif %}
 {% endblock %}

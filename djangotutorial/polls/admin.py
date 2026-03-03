@@ -8,7 +8,7 @@ class ChoiceInLine(admin.TabularInline):
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ["question_text", "published_date"]
+    list_display = ["question_text", "published_date", "author"]
     list_filter = ["published_date"]
     ordering = ["published_date"]
     search_fields = ["question_text"]

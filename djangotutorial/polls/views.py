@@ -44,6 +44,7 @@ class CreateQuestionView(PermissionRequiredMixin, FormView):
         question = form.save(commit=False)
 
         question.pub_date = timezone.now()
+        question.author = self.request.user
         question.save()
         choices = [form.cleaned_data.get(f'choice_{i}') for i in range(1, 6)]
 
@@ -60,7 +61,9 @@ def delete_question(request, question_id):
     if request.method == "POST":
         question.delete()
         return HttpResponseRedirect(reverse("polls:index"))
-    return render(request, "polls/index.html", {"question": question})
+
+    return render(request, "polls/index.html",
+                  {"question": question})
 
 
 class FrequencyView(generic.DetailView):
@@ -102,6 +105,14 @@ class DetailView(generic.DetailView):
 
     def get_queryset(self):
         return Question.objects.filter(published_date__lte=timezone.now())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_valid"] = (
+                self.request.user is not None and
+                self.request.user.get_username() + self.object.id.__str__() ==
+                self.object.author + self.object.id.__str__())
+        return context
 
 
 class ResultsView(generic.DetailView):

@@ -8,6 +8,8 @@ class Question(models.Model):
     question_text = models.CharField(max_length=200)
     published_date = models.DateTimeField("published date", default=timezone.now())
 
+    author = models.CharField(max_length=100, default="")
+
     def __str__(self):
         return self.question_text[:20] + f" {self.published_date}"
 
