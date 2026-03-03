@@ -54,6 +54,15 @@ class CreateQuestionView(PermissionRequiredMixin, FormView):
         return redirect('polls:all')
 
 
+def delete_question(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+
+    if request.method == "POST":
+        question.delete()
+        return HttpResponseRedirect(reverse("polls:index"))
+    return render(request, "polls/index.html", {"question": question})
+
+
 class FrequencyView(generic.DetailView):
     model = Question
     template_name = "polls/frequency.html"

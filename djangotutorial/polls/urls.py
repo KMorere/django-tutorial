@@ -5,6 +5,7 @@ app_name = "polls"
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
     path("question_form/", views.CreateQuestionView.as_view(), name="question_form"),
+    path("<int:question_id>/delete/", views.delete_question, name="delete"),
     path("all/", views.AllView.as_view(), name="all"),
     path("<int:pk>/frequency/", views.FrequencyView.as_view(), name="frequency"),
     path("statistics/", views.StatisticView.as_view(), name="statistics"),
