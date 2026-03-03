@@ -69,6 +69,7 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_URL = "/"
 LOGIN_REDIRECT_URL = "/polls/"
 
 LOGOUT_REDIRECT_URL = "/polls/"
